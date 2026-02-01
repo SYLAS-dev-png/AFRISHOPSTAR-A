@@ -4,11 +4,12 @@
     <base target="_self">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFRISHOPSTAR - Plateforme B2B de vente en gros</title>
-    <meta name="description" content="AFRISHOPSTAR - La plateforme de vente en gros pour les entreprises africaines. Trouvez des fournisseurs, produits et opportunités commerciales.">
+    <title>AFRISHOPSTAR - Plateforme B2B</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
@@ -22,19 +23,18 @@
                     },
                     fontFamily: {
                         'inter': ['Inter', 'sans-serif']
-                    },
-                    spacing: {
-                        '128': '32rem',
-                        '144': '36rem'
                     }
                 }
             }
         }
     </script>
+
     <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
+        * { font-family: 'Inter', sans-serif; }
+
+        .page { display: none; }
+        .active-page { display: block; }
+
         .category-card:hover {
             transform: translateY(-5px);
             transition: transform 0.3s ease;
@@ -43,644 +43,239 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        .search-bar:focus {
-            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
-        }
     </style>
 </head>
+
 <body class="min-h-screen bg-gray-50 font-inter">
-    <!-- Header et Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4">
-            <!-- Top Bar -->
-            <div class="flex items-center justify-between py-2 border-b">
-                <div class="flex items-center space-x-6">
-                    <div class="flex items-center">
-                        <i class="fas fa-globe-africa text-accent text-xl mr-2"></i>
-                        <span class="text-sm font-medium">Afrique | Français</span>
-                    </div>
-                    <div class="hidden md:flex items-center space-x-4">
-                        <a href="javascript:void(0)" class="text-sm hover:text-primary">Aide</a>
-                        <a href="javascript:void(0)" class="text-sm hover:text-primary">Vendre sur AFRISHOPSTAR</a>
-                        <a href="javascript:void(0)" class="text-sm hover:text-primary">Devenir fournisseur</a>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="javascript:void(0)" class="text-sm hover:text-primary">
-                        <i class="fas fa-user mr-1"></i> Mon compte
-                    </a>
-                    <a href="javascript:void(0)" class="text-sm hover:text-primary">
-                        <i class="fas fa-shopping-cart mr-1"></i> Panier
-                    </a>
-                    <a href="javascript:void(0)" class="text-sm hover:text-primary">
-                        <i class="fas fa-heart mr-1"></i> Favoris
-                    </a>
-                </div>
-            </div>
 
-            <!-- Main Navigation -->
-            <nav class="flex items-center justify-between py-4">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-star text-primary text-2xl"></i>
-                        <div>
-                            <h1 class="text-2xl font-bold text-secondary">AFRISHOP<span class="text-primary">STAR</span></h1>
-                            <p class="text-xs text-gray-500">Business to Business</p>
-                        </div>
-                    </div>
-                </div>
+<!-- ================= HEADER ================= -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+<div class="container mx-auto px-4">
 
-                <!-- Search Bar -->
-                <div class="flex-1 max-w-2xl mx-8">
-                    <div class="relative">
-                        <div class="flex">
-                            <select class="bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none">
-                                <option>Toutes catégories</option>
-                                <option>Mode & Textile</option>
-                                <option>Électronique</option>
-                                <option>Agriculture</option>
-                                <option>Construction</option>
-                                <option>Santé & Beauté</option>
-                            </select>
-                            <input type="text" 
-                                   placeholder="Rechercher des produits, fournisseurs, catégories..." 
-                                   class="flex-1 border border-gray-300 px-4 py-3 focus:outline-none search-bar">
-                            <button class="bg-primary text-white px-6 py-3 rounded-r-lg hover:bg-orange-600 transition">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+<!-- Top Bar -->
+<div class="flex items-center justify-between py-2 border-b">
+    <div class="flex items-center space-x-6">
+        <i class="fas fa-globe-africa text-accent text-xl mr-2"></i>
+        <span class="text-sm font-medium">Afrique | Français</span>
+    </div>
 
-                <!-- Action Buttons -->
-                <div class="flex items-center space-x-4">
-                    <button class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition">
-                        <i class="fas fa-store mr-2"></i>Vendre maintenant
-                    </button>
-                    <button class="border border-primary text-primary px-6 py-2 rounded-lg hover:bg-primary hover:text-white transition">
-                        <i class="fas fa-download mr-2"></i>Télécharger l'app
-                    </button>
-                </div>
-            </nav>
+    <div class="flex items-center space-x-4">
+        <a href="#" onclick="showPage('page-compte')" class="text-sm hover:text-primary">
+            <i class="fas fa-user mr-1"></i> Mon compte
+        </a>
+        <a href="#" onclick="showPage('page-panier')" class="text-sm hover:text-primary">
+            <i class="fas fa-shopping-cart mr-1"></i> Panier
+        </a>
+        <a href="#" onclick="showPage('page-favoris')" class="text-sm hover:text-primary">
+            <i class="fas fa-heart mr-1"></i> Favoris
+        </a>
+    </div>
+</div>
 
-            <!-- Categories Menu -->
-            <div class="border-t py-3">
-                <div class="flex items-center space-x-6 overflow-x-auto">
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-home mr-2"></i>Accueil
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-fire mr-2"></i>Tendances
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-tshirt mr-2"></i>Mode & Textile
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-mobile-alt mr-2"></i>Électronique
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-tractor mr-2"></i>Agriculture
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-tools mr-2"></i>Construction
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-heartbeat mr-2"></i>Santé & Beauté
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-shipping-fast mr-2"></i>Logistique
-                    </a>
-                    <a href="javascript:void(0)" class="whitespace-nowrap hover:text-primary font-medium">
-                        <i class="fas fa-percentage mr-2"></i>Promotions
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+<!-- Navigation principale -->
+<nav class="flex items-center justify-between py-4">
 
-    <main class="container mx-auto px-4 py-6">
-        <!-- Hero Banner -->
-        <section class="mb-8">
-            <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-8 text-white">
-                <div class="max-w-2xl">
-                    <h2 class="text-4xl font-bold mb-4">Connectez votre entreprise au marché africain</h2>
-                    <p class="text-lg mb-6">Plus de 50,000 fournisseurs vérifiés. Commandes en gros avec garantie de qualité.</p>
-                    <div class="flex space-x-4">
-                        <button class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-                            Explorer les produits
-                        </button>
-                        <button class="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition">
-                            Devenir fournisseur
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="flex items-center space-x-2">
+    <i class="fas fa-star text-primary text-2xl"></i>
+    <div>
+        <h1 class="text-2xl font-bold text-secondary">
+            AFRISHOP<span class="text-primary">STAR</span>
+        </h1>
+        <p class="text-xs text-gray-500">Business to Business</p>
+    </div>
+</div>
 
-        <!-- Catégories populaires -->
-        <section class="mb-12">
-            <h3 class="text-2xl font-bold text-secondary mb-6">Catégories populaires</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <div class="category-card bg-white rounded-lg shadow p-4 text-center hover:shadow-lg cursor-pointer">
-                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i class="fas fa-tshirt text-blue-600 text-2xl"></i>
-                    </div>
-                    <h4 class="font-semibold">Mode & Textile</h4>
-                    <p class="text-sm text-gray-500">10,000+ produits</p>
-                </div>
-                <div class="category-card bg-white rounded-lg shadow p-4 text-center hover:shadow-lg cursor-pointer">
-                    <div class="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i class="fas fa-mobile-alt text-green-600 text-2xl"></i>
-                    </div>
-                    <h4 class="font-semibold">Électronique</h4>
-                    <p class="text-sm text-gray-500">8,500+ produits</p>
-                </div>
-                <div class="category-card bg-white rounded-lg shadow p-4 text-center hover:shadow-lg cursor-pointer">
-                    <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i class="fas fa-tractor text-yellow-600 text-2xl"></i>
-                    </div>
-                    <h4 class="font-semibold">Agriculture</h4>
-                    <p class="text-sm text-gray-500">6,200+ produits</p>
-                </div>
-                <div class="category-card bg-white rounded-lg shadow p-4 text-center hover:shadow-lg cursor-pointer">
-                    <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i class="fas fa-tools text-red-600 text-2xl"></i>
-                    </div>
-                    <h4 class="font-semibold">Construction</h4>
-                    <p class="text-sm text-gray-500">7,800+ produits</p>
-                </div>
-                <div class="category-card bg-white rounded-lg shadow p-4 text-center hover:shadow-lg cursor-pointer">
-                    <div class="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i class="fas fa-heartbeat text-purple-600 text-2xl"></i>
-                    </div>
-                    <h4 class="font-semibold">Santé & Beauté</h4>
-                    <p class="text-sm text-gray-500">5,300+ produits</p>
-                </div>
-                <div class="category-card bg-white rounded-lg shadow p-4 text-center hover:shadow-lg cursor-pointer">
-                    <div class="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <i class="fas fa-utensils text-indigo-600 text-2xl"></i>
-                    </div>
-                    <h4 class="font-semibold">Alimentation</h4>
-                    <p class="text-sm text-gray-500">9,100+ produits</p>
-                </div>
-            </div>
-        </section>
+<!-- Barre de recherche -->
+<div class="flex-1 max-w-2xl mx-8">
+    <div class="flex">
+        <input type="text" id="searchInput"
+               placeholder="Rechercher des produits..."
+               class="flex-1 border px-4 py-3">
 
-        <!-- Produits en vedette -->
-        <section class="mb-12">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-secondary">Produits en vedette</h3>
-                <a href="javascript:void(0)" class="text-primary hover:text-orange-600 font-medium">
-                    Voir tous <i class="fas fa-arrow-right ml-1"></i>
-                </a>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="featured-products">
-                <!-- Les produits seront générés par JavaScript -->
-            </div>
-        </section>
+        <button onclick="searchSite()"
+                class="bg-primary text-white px-6 py-3">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</div>
 
-        <!-- Fournisseurs vérifiés -->
-        <section class="mb-12">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-secondary">Fournisseurs vérifiés</h3>
-                <a href="javascript:void(0)" class="text-primary hover:text-orange-600 font-medium">
-                    Explorer <i class="fas fa-arrow-right ml-1"></i>
-                </a>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center mb-4">
-                        <img src="https://picsum.photos/60?random=10" alt="Logo fournisseur" class="w-16 h-16 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-lg">Textiles Africains Ltd</h4>
-                            <div class="flex items-center">
-                                <span class="text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </span>
-                                <span class="text-sm text-gray-500 ml-2">4.5 (320 avis)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-4">Spécialiste en tissus africains de haute qualité. Export vers 15 pays.</p>
-                    <div class="flex justify-between text-sm">
-                        <span><i class="fas fa-check-circle text-accent mr-1"></i> Vérifié</span>
-                        <span><i class="fas fa-shipping-fast text-primary mr-1"></i> Livraison rapide</span>
-                        <span><i class="fas fa-shield-alt text-secondary mr-1"></i> Garantie</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center mb-4">
-                        <img src="https://picsum.photos/60?random=11" alt="Logo fournisseur" class="w-16 h-16 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-lg">Tech Import Africa</h4>
-                            <div class="flex items-center">
-                                <span class="text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="text-sm text-gray-500 ml-2">5.0 (450 avis)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-4">Importateur d"électronique et gadgets technologiques pour toute l"Afrique.</p>
-                    <div class="flex justify-between text-sm">
-                        <span><i class="fas fa-check-circle text-accent mr-1"></i> Vérifié</span>
-                        <span><i class="fas fa-shipping-fast text-primary mr-1"></i> Livraison rapide</span>
-                        <span><i class="fas fa-shield-alt text-secondary mr-1"></i> Garantie</span>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow p-6">
-                    <div class="flex items-center mb-4">
-                        <img src="https://picsum.photos/60?random=12" alt="Logo fournisseur" class="w-16 h-16 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-lg">AgriPro Solutions</h4>
-                            <div class="flex items-center">
-                                <span class="text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </span>
-                                <span class="text-sm text-gray-500 ml-2">4.8 (280 avis)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-4">Équipements agricoles modernes et produits agroalimentaires de qualité.</p>
-                    <div class="flex justify-between text-sm">
-                        <span><i class="fas fa-check-circle text-accent mr-1"></i> Vérifié</span>
-                        <span><i class="fas fa-shipping-fast text-primary mr-1"></i> Livraison rapide</span>
-                        <span><i class="fas fa-shield-alt text-secondary mr-1"></i> Garantie</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- Boutons d'action -->
+<div class="flex items-center space-x-4">
+    <button onclick="showPage('page-vendre')"
+            class="bg-secondary text-white px-6 py-2 rounded-lg">
+        <i class="fas fa-store mr-2"></i>Vendre maintenant
+    </button>
 
-        <!-- Pourquoi choisir AFRISHOPSTAR -->
-        <section class="mb-12 bg-white rounded-xl shadow-lg p-8">
-            <h3 class="text-2xl font-bold text-secondary text-center mb-8">Pourquoi choisir AFRISHOPSTAR ?</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-shield-alt text-primary text-3xl"></i>
-                    </div>
-                    <h4 class="font-bold text-lg mb-2">Transactions sécurisées</h4>
-                    <p class="text-gray-600">Paiements protégés et garantie de remboursement pour toutes vos commandes.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-check-circle text-accent text-3xl"></i>
-                    </div>
-                    <h4 class="font-bold text-lg mb-2">Fournisseurs vérifiés</h4>
-                    <p class="text-gray-600">Tous nos fournisseurs passent par un processus de vérification rigoureux.</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-headset text-secondary text-3xl"></i>
-                    </div>
-                    <h4 class="font-bold text-lg mb-2">Support 24/7</h4>
-                    <p class="text-gray-600">Notre équipe de support est disponible pour vous aider à tout moment.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+    <button onclick="showPage('page-download')"
+            class="border border-primary text-primary px-6 py-2 rounded-lg">
+        <i class="fas fa-download mr-2"></i>Télécharger l'app
+    </button>
+</div>
+</nav>
 
-    <!-- Footer -->
-    <footer class="bg-secondary text-white pt-12 pb-6">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i class="fas fa-star text-primary text-2xl"></i>
-                        <h3 class="text-2xl font-bold">AFRISHOP<span class="text-primary">STAR</span></h3>
-                    </div>
-                    <p class="text-gray-300 mb-4">La plateforme B2B leader en Afrique pour le commerce en gros et les opportunités d"affaires.</p>
-                    <div class="flex space-x-4">
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold mb-4">Acheteurs</h4>
-                    <ul class="space-y-2">
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Comment acheter</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Rechercher des fournisseurs</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Demandes de devis</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Centre d"aide</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold mb-4">Fournisseurs</h4>
-                    <ul class="space-y-2">
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Devenir fournisseur</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Centre fournisseurs</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Ressources d"exportation</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Formations</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold mb-4">Contact</h4>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-2 text-primary"></i>
-                            <span class="text-gray-300">Lomé, Togo</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone mr-2 text-primary"></i>
-                            <span class="text-gray-300">+228 93 58 38 98</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2 text-primary"></i>
-                            <span class="text-gray-300">sylasbusiness35@gmail.com</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 pt-6">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-300 text-sm mb-4 md:mb-0">
-                        © 2024 AFRISHOPSTAR. Tous droits réservés.
-                    </p>
-                    <div class="flex space-x-6">
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white text-sm">Conditions d"utilisation</a>
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white text-sm">Politique de confidentialité</a>
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white text-sm">Cookies</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+<!-- Menu catégories -->
+<div class="border-t py-3">
+<div class="flex space-x-6 overflow-x-auto">
+    <a href="#" onclick="showPage('page-accueil')" class="font-medium">
+        <i class="fas fa-home mr-2"></i>Accueil
+    </a>
+    <a href="#" onclick="showPage('page-tendances')" class="font-medium">
+        <i class="fas fa-fire mr-2"></i>Tendances
+    </a>
+    <a href="#" onclick="showPage('page-mode')" class="font-medium">
+        <i class="fas fa-tshirt mr-2"></i>Mode & Textile
+    </a>
+    <a href="#" onclick="showPage('page-electronique')" class="font-medium">
+        <i class="fas fa-mobile-alt mr-2"></i>Électronique
+    </a>
+</div>
+</div>
 
-    <script>
-        // Données des produits
-        const products = [
-            {
-                "id": 1,
-                "name": "Tissu Wax Africain Premium",
-                "category": "Mode & Textile",
-                "price": 4500,
-                "currency": "FCFA",
-                "unit": "par rouleau",
-                "minOrder": 10,
-                "rating": 4.5,
-                "reviews": 128,
-                "supplier": "Textiles Africains Ltd",
-                "image": "https://picsum.photos/300/200?random=1",
-                "description": "Tissu wax de haute qualité, motifs traditionnels, 100% coton"
-            },
-            {
-                "id": 2,
-                "name": "Smartphone Android 128GB",
-                "category": "Électronique",
-                "price": 85000,
-                "currency": "FCFA",
-                "unit": "par unité",
-                "minOrder": 5,
-                "rating": 4.8,
-                "reviews": 256,
-                "supplier": "Tech Import Africa",
-                "image": "https://picsum.photos/300/200?random=2",
-                "description": "Smartphone 6.5\", 8GB RAM, 128GB stockage, double caméra"
-            },
-            {
-                "id": 3,
-                "name": "Tracteur Agricole 50HP",
-                "category": "Agriculture",
-                "price": 12500000,
-                "currency": "FCFA",
-                "unit": "par unité",
-                "minOrder": 1,
-                "rating": 4.9,
-                "reviews": 42,
-                "supplier": "AgriPro Solutions",
-                "image": "https://picsum.photos/300/200?random=3",
-                "description": "Tracteur diesel 50 chevaux, équipement complet inclus"
-            },
-            {
-                "id": 4,
-                "name": "Ciment Portland 50kg",
-                "category": "Construction",
-                "price": 5500,
-                "currency": "FCFA",
-                "unit": "par sac",
-                "minOrder": 100,
-                "rating": 4.7,
-                "reviews": 89,
-                "supplier": "BuildMaster Ltd",
-                "image": "https://picsum.photos/300/200?random=4",
-                "description": "Ciment de construction haute résistance, qualité certifiée"
-            },
-            {
-                "id": 5,
-                "name": "Huile d"Argan Bio 100ml",
-                "category": "Santé & Beauté",
-                "price": 12000,
-                "currency": "FCFA",
-                "unit": "par flacon",
-                "minOrder": 50,
-                "rating": 4.6,
-                "reviews": 167,
-                "supplier": "Natural Beauty Morocco",
-                "image": "https://picsum.photos/300/200?random=5",
-                "description": "Huile d"argan pure 100% bio, certification écologique"
-            },
-            {
-                "id": 6,
-                "name": "Riz Basmati Premium 25kg",
-                "category": "Alimentation",
-                "price": 35000,
-                "currency": "FCFA",
-                "unit": "par sac",
-                "minOrder": 20,
-                "rating": 4.4,
-                "reviews": 203,
-                "supplier": "AgriFood Export",
-                "image": "https://picsum.photos/300/200?random=6",
-                "description": "Riz basmati de qualité supérieure, grains longs parfumés"
-            },
-            {
-                "id": 7,
-                "name": "Générateur Solaire 5KVA",
-                "category": "Énergie",
-                "price": 1850000,
-                "currency": "FCFA",
-                "unit": "par unité",
-                "minOrder": 3,
-                "rating": 4.8,
-                "reviews": 56,
-                "supplier": "Solar Power Africa",
-                "image": "https://picsum.photos/300/200?random=7",
-                "description": "Système solaire complet avec batteries et onduleur"
-            },
-            {
-                "id": 8,
-                "name": "Meubles Bureau Acajou",
-                "category": "Mobilier",
-                "price": 285000,
-                "currency": "FCFA",
-                "unit": "par set",
-                "minOrder": 5,
-                "rating": 4.5,
-                "reviews": 78,
-                "supplier": "Woodcraft Enterprises",
-                "image": "https://picsum.photos/300/200?random=8",
-                "description": "Bureau en acajou massif avec tiroirs et chaise assortie"
-            }
-        ];
+</div>
+</header>
 
-        // Fonction pour formater les prix
-        function formatPrice(price) {
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        }
+<!-- ================= PAGES ================= -->
 
-        // Fonction pour générer les étoiles de notation
-        function generateRatingStars(rating) {
-            let stars = "";
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 >= 0.5;
-            
-            for (let i = 0; i < 5; i++) {
-                if (i < fullStars) {
-                    stars += "<i class="fas fa-star text-yellow-400"></i>";
-                } else if (i === fullStars && hasHalfStar) {
-                    stars += "<i class="fas fa-star-half-alt text-yellow-400"></i>";
-                } else {
-                    stars += "<i class="far fa-star text-yellow-400"></i>";
-                }
-            }
-            return stars;
-        }
+<!-- PAGE ACCUEIL -->
+<main id="page-accueil" class="page active-page container mx-auto px-4 py-6">
 
-        // Fonction pour générer les cartes de produits
-        function generateProductCard(product) {
-            return `
-                <div class="product-card bg-white rounded-lg shadow overflow-hidden">
-                    <div class="relative">
-                        <img src="${product.image}" 
-                             alt="${product.name}" 
-                             class="w-full h-48 object-cover"
-                             loading="lazy">
-                        <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
-                            Vérifié
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-gray-800 line-clamp-2">${product.name}</h4>
-                            <button class="text-gray-400 hover:text-primary">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <div class="flex items-center mb-1">
-                                ${generateRatingStars(product.rating)}
-                                <span class="text-sm text-gray-500 ml-2">${product.rating} (${product.reviews})</span>
-                            </div>
-                            <p class="text-sm text-gray-500">${product.supplier}</p>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <div class="text-2xl font-bold text-primary">
-                                ${formatPrice(product.price)} ${product.currency}
-                            </div>
-                            <p class="text-sm text-gray-500">${product.unit} • Min. commande: ${product.minOrder}</p>
-                        </div>
-                        
-                        <div class="flex space-x-2">
-                            <button class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-orange-600 transition font-medium"
-                                    onclick="addToCart(${product.id})">
-                                <i class="fas fa-shopping-cart mr-2"></i>Ajouter
-                            </button>
-                            <button class="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition"
-                                    onclick="viewProduct(${product.id})">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+<section class="mb-8">
+<div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-8 text-white">
+    <h2 class="text-4xl font-bold mb-4">
+        Connectez votre entreprise au marché africain
+    </h2>
+    <div class="flex space-x-4">
+        <button onclick="document.getElementById('featured-products').scrollIntoView({behavior:'smooth'})"
+                class="bg-white text-primary px-6 py-3 rounded-lg font-semibold">
+            Explorer les produits
+        </button>
 
-        // Fonction pour afficher les produits
-        function displayProducts() {
-            const container = document.getElementById("featured-products");
-            container.innerHTML = products.slice(0, 4).map(product => generateProductCard(product)).join("");
-        }
+        <button onclick="showPage('page-fournisseur')"
+                class="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold">
+            Devenir fournisseur
+        </button>
+    </div>
+</div>
+</section>
 
-        // Fonctions pour les actions
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            alert(`Produit ajouté au panier : ${product.name}`);
-            // Ici, vous ajouteriez la logique réelle d"ajout au panier
-        }
+<section class="mb-12">
+<h3 class="text-2xl font-bold text-secondary mb-6">Produits en vedette</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="featured-products"></div>
+</section>
 
-        function viewProduct(productId) {
-            const product = products.find(p => p.id === productId);
-            alert(`Voir les détails de : ${product.name}\nPrix : ${formatPrice(product.price)} ${product.currency}\nFournisseur : ${product.supplier}`);
-            // Ici, vous redirigeriez vers la page de détail du produit
-        }
+</main>
 
-        // Initialisation
-        document.addEventListener("DOMContentLoaded", function() {
-            displayProducts();
-            
-            // Gestion de la navigation
-            document.querySelectorAll("a[href^="javascript:void(0)"]").forEach(link => {
-                link.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    const text = this.textContent || this.innerText;
-                    alert(`Navigation vers : ${text}`);
-                    // Ici, vous implémenteriez la navigation réelle
-                });
-            });
-            
-            // Gestion de la recherche
-            const searchButton = document.querySelector("button.bg-primary");
-            const searchInput = document.querySelector(".search-bar");
-            
-            searchButton.addEventListener("click", function() {
-                if (searchInput.value.trim()) {
-                    alert(`Recherche pour : ${searchInput.value}`);
-                    // Ici, vous implémenteriez la recherche réelle
-                }
-            });
-            
-            searchInput.addEventListener("keypress", function(e) {
-                if (e.key === "Enter") {
-                    if (searchInput.value.trim()) {
-                        alert(`Recherche pour : ${searchInput.value}`);
-                        // Ici, vous implémenteriez la recherche réelle
-                    }
-                }
-            });
-        });
-    </script>
+<!-- PAGE TÉLÉCHARGER L'APP -->
+<section id="page-download" class="page container mx-auto px-4 py-10 text-center">
+<h1 class="text-3xl font-bold mb-6">Télécharger AFRISHOPSTAR</h1>
+
+<p class="mb-6">Choisissez votre plateforme :</p>
+
+<button class="bg-black text-white px-6 py-3 rounded-lg">App Store</button>
+<button class="bg-green-600 text-white px-6 py-3 rounded-lg ml-4">Google Play</button>
+
+<br><br>
+<button onclick="showPage('page-accueil')" class="text-blue-600">← Retour</button>
+</section>
+
+<!-- PAGE VENDRE -->
+<section id="page-vendre" class="page container mx-auto px-4 py-10">
+<h1 class="text-3xl font-bold">Espace Vendeur</h1>
+<p class="mt-4">Inscription vendeur à venir.</p>
+<button onclick="showPage('page-accueil')" class="text-blue-600">← Retour</button>
+</section>
+
+<!-- PAGE FOURNISSEUR -->
+<section id="page-fournisseur" class="page container mx-auto px-4 py-10">
+<h1 class="text-3xl font-bold">Devenir fournisseur</h1>
+<p class="mt-4">Formulaire à venir.</p>
+<button onclick="showPage('page-accueil')" class="text-blue-600">← Retour</button>
+</section>
+
+<!-- PAGE PANIER -->
+<section id="page-panier" class="page container mx-auto px-4 py-10">
+<h1 class="text-3xl font-bold">Votre Panier</h1>
+<div id="cart-items"></div>
+<button onclick="showPage('page-accueil')" class="text-blue-600">← Retour</button>
+</section>
+
+<!-- PAGE FAVORIS -->
+<section id="page-favoris" class="page container mx-auto px-4 py-10">
+<h1 class="text-3xl font-bold">Vos Favoris</h1>
+<div id="favorites"></div>
+<button onclick="showPage('page-accueil')" class="text-blue-600">← Retour</button>
+</section>
+
+<!-- PAGE COMPTE -->
+<section id="page-compte" class="page container mx-auto px-4 py-10">
+<h1 class="text-3xl font-bold">Mon Compte</h1>
+<p>Connexion / Inscription à venir.</p>
+<button onclick="showPage('page-accueil')" class="text-blue-600">← Retour</button>
+</section>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+const products = [
+ {id:1,name:"Tissu Wax Africain Premium",price:4500,image:"https://picsum.photos/300/200?random=1"},
+ {id:2,name:"Smartphone Android 128GB",price:85000,image:"https://picsum.photos/300/200?random=2"},
+ {id:3,name:"Tracteur Agricole 50HP",price:12500000,image:"https://picsum.photos/300/200?random=3"},
+ {id:4,name:"Ciment Portland 50kg",price:5500,image:"https://picsum.photos/300/200?random=4"}
+];
+
+function formatPrice(p){
+ return p.toString().replace(/\B(?=(\d{3})+(?!\d))/g," ");
+}
+
+function generateProductCard(p){
+ return `
+ <div class="product-card bg-white rounded-lg shadow overflow-hidden p-4">
+  <img src="${p.image}" class="w-full h-48 object-cover mb-3">
+  <h4 class="font-bold mb-2">${p.name}</h4>
+  <div class="text-xl font-bold text-primary">
+     ${formatPrice(p.price)} FCFA
+  </div>
+  <div class="mt-4 flex space-x-2">
+   <button onclick="addToCart(${p.id})"
+           class="flex-1 bg-primary text-white py-2 rounded-lg">
+     Ajouter au panier
+   </button>
+   <button onclick="viewProduct(${p.id})"
+           class="px-4 py-2 border border-primary text-primary rounded-lg">
+     Voir
+   </button>
+  </div>
+ </div>
+ `;
+}
+
+function displayProducts(){
+ document.getElementById("featured-products").innerHTML =
+ products.map(generateProductCard).join("");
+}
+
+function showPage(pageId){
+ document.querySelectorAll(".page").forEach(p => p.classList.remove("active-page"));
+ document.getElementById(pageId).classList.add("active-page");
+ window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function addToCart(id){
+ const product = products.find(p=>p.id===id);
+ document.getElementById("cart-items").innerHTML += `<p>${product.name}</p>`;
+ showPage("page-panier");
+}
+
+function viewProduct(id){
+ alert("Produit ID : " + id + " (tu pourras faire une vraie fiche plus tard)");
+}
+
+function searchSite(){
+ const q = document.getElementById("searchInput").value;
+ if(q) alert("Recherche : " + q);
+}
+
+document.addEventListener("DOMContentLoaded", displayProducts);
+</script>
+
 </body>
 </html>
