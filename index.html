@@ -439,28 +439,62 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Initialiser le panier
+  // ===== PANIER =====
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // Mettre à jour le compteur
-  function updateCartCount() {
-    document.getElementById("cart-count").textContent = cart.length;
+  const cartCount = document.getElementById("cart-count");
+  const cartItems = document.getElementById("cart-items");
+  const clearBtn = document.getElementById("clear-cart");
+
+  function updateCart() {
+    cartCount.textContent = cart.length;
+    cartItems.innerHTML = "";
+
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.className = "flex justify-between items-center mb-2";
+
+      li.innerHTML = `
+        <span>${item}</span>
+        <button class="text-red-500 font-bold">❌</button>
+      `;
+
+      li.querySelector("button").addEventListener("click", () => {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCart();
+      });
+
+      cartItems.appendChild(li);
+    });
   }
 
-  updateCartCount();
+  updateCart();
 
-  // Gérer les boutons "Ajouter"
-  const buttons = document.querySelectorAll("button[data-product]");
-
-  buttons.forEach(button => {
+  document.querySelectorAll("button[data-product]").forEach(button => {
     button.addEventListener("click", () => {
-      const productName = button.getAttribute("data-product");
-
-      cart.push(productName);
+      cart.push(button.getAttribute("data-product"));
       localStorage.setItem("cart", JSON.stringify(cart));
+      updateCart();
+    });
+  });
 
-      updateCartCount();
-      alert(productName + " ajouté au panier 🛒");
+  clearBtn.addEventListener("click", () => {
+    cart = [];
+    localStorage.removeItem("cart");
+    updateCart();
+  });
+
+  // ===== RECHERCHE =====
+  const searchInput = document.getElementById("search");
+  const products = document.querySelectorAll(".product-card");
+
+  searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
+
+    products.forEach(product => {
+      const name = product.dataset.name.toLowerCase();
+      product.style.display = name.includes(value) ? "block" : "none";
     });
   });
 
