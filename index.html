@@ -500,6 +500,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script><!-- Firebase App (compat) -->
+    <script>
+  const auth = firebase.auth();
+
+  // INSCRIPTION
+  function registerUser() {
+    const email = document.getElementById("auth-email").value;
+    const password = document.getElementById("auth-password").value;
+
+    if (!email || !password) {
+      alert("Email et mot de passe requis");
+      return;
+    }
+
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        alert("Compte créé avec succès 🎉");
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+  }
+
+  // CONNEXION
+  function loginUser() {
+    const email = document.getElementById("auth-email").value;
+    const password = document.getElementById("auth-password").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        alert("Connexion réussie ✅");
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+  }
+
+  // ÉTAT UTILISATEUR
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      console.log("Utilisateur connecté :", user.email);
+    } else {
+      console.log("Aucun utilisateur connecté");
+    }
+  });
+</script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 
 <!-- Firebase Auth -->
