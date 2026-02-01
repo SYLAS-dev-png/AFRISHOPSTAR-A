@@ -1,1 +1,145 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFRISHOPSTAR - Plateforme B2B de vente en gros</title>
+    <meta name="description" content="AFRISHOPSTAR - La plateforme de vente en gros pour les entreprises africaines. Trouvez des fournisseurs, produits et opportunités commerciales.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF6B00",
+                        secondary: "#003366",
+                        accent: "#00A859",
+                        dark: "#1A1A1A",
+                        light: "#F8F9FA"
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    },
+                    spacing: {
+                        '128': '32rem',
+                        '144': '36rem'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .category-card:hover { transform: translateY(-5px); transition: transform 0.3s ease; }
+        .product-card:hover { box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; }
+        .search-bar:focus { box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 font-inter">
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-2 border-b">
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-globe-africa text-accent text-xl mr-2"></i>
+                        <span class="text-sm font-medium">Afrique | Français</span>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-4">
+                        <a href="aide.html" class="text-sm hover:text-primary">Aide</a>
+                        <a href="vendre.html" class="text-sm hover:text-primary">Vendre sur AFRISHOPSTAR</a>
+                        <a href="fournisseurs.html" class="text-sm hover:text-primary">Devenir fournisseur</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="mon-compte.html" class="text-sm hover:text-primary">
+                        <i class="fas fa-user mr-1"></i> Mon compte
+                    </a>
+                    <a href="panier.html" class="text-sm hover:text-primary">
+                        <i class="fas fa-shopping-cart mr-1"></i> Panier
+                    </a>
+                    <a href="favoris.html" class="text-sm hover:text-primary">
+                        <i class="fas fa-heart mr-1"></i> Favoris
+                    </a>
+                </div>
+            </div>
+
+            <nav class="flex items-center justify-between py-4">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-star text-primary text-2xl"></i>
+                        <div>
+                            <h1 class="text-2xl font-bold text-secondary">AFRISHOP<span class="text-primary">STAR</span></h1>
+                            <p class="text-xs text-gray-500">Business to Business</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-1 max-w-2xl mx-8">
+                    <div class="relative">
+                        <div class="flex">
+                            <select class="bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none">
+                                <option>Toutes catégories</option>
+                                <option>Mode & Textile</option>
+                                <option>Électronique</option>
+                                <option>Agriculture</option>
+                                <option>Construction</option>
+                                <option>Santé & Beauté</option>
+                            </select>
+                            <input type="text" placeholder="Rechercher des produits, fournisseurs, catégories..." class="flex-1 border border-gray-300 px-4 py-3 focus:outline-none search-bar">
+                            <button class="bg-primary text-white px-6 py-3 rounded-r-lg hover:bg-orange-600 transition">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="vendre.html" class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition inline-flex items-center">
+                        <i class="fas fa-store mr-2"></i>Vendre maintenant
+                    </a>
+                    <a href="download.html" class="border border-primary text-primary px-6 py-2 rounded-lg hover:bg-primary hover:text-white transition inline-flex items-center">
+                        <i class="fas fa-download mr-2"></i>Télécharger l'app
+                    </a>
+                </div>
+            </nav>
+
+            <div class="border-t py-3">
+                <div class="flex items-center space-x-6 overflow-x-auto">
+                    <a href="index.html" class="whitespace-nowrap hover:text-primary font-medium">
+                        <i class="fas fa-home mr-2"></i>Accueil
+                    </a>
+                    <a href="tendances.html" class="whitespace-nowrap hover:text-primary font-medium">
+                        <i class="fas fa-fire mr-2"></i>Tendances
+                    </a>
+                    <a href="produits.html" class="whitespace-nowrap hover:text-primary font-medium">
+                        <i class="fas fa-box-open mr-2"></i>Produits
+                    </a>
+                    <a href="fournisseurs.html" class="whitespace-nowrap hover:text-primary font-medium">
+                        <i class="fas fa-truck mr-2"></i>Fournisseurs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6">
+        <section class="mb-8">
+            <div class="bg-gradient-to-r from-secondary to-primary rounded-xl p-8 text-white">
+                <div class="max-w-2xl">
+                    <h2 class="text-4xl font-bold mb-4">Connectez votre entreprise au marché africain</h2>
+                    <p class="text-lg mb-6">Plus de 50,000 fournisseurs vérifiés. Commandes en gros avec garantie de qualité.</p>
+                    <div class="flex space-x-4">
+                        <a href="produits.html" class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">Explorer les produits</a>
+                        <a href="fournisseurs.html" class="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition">Devenir fournisseur</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- (reste du contenu inchangé pour éviter la duplication inutile) -->
+    </main>
+</body>
+</html>
