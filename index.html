@@ -500,5 +500,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+    <script>
+    // 1. REMPLACE CE LIEN par le lien CSV de ton Google Sheet publié
+    const SHEET_URL = "TON_LIEN_PUBLIE_ICI_AU_FORMAT_CSV";
+
+    async function loadProducts() {
+        const container = document.getElementById('featured-products');
+        
+        try {
+            const response = await fetch(SHEET_URL);
+            const data = await response.text();
+            
+            // Conversion du CSV en tableau d'objets
+            const rows = data.split('\n').slice(1);
+            container.innerHTML = ''; // Vide le message de chargement
+
+            rows.forEach(row => {
+                const [nom, prix, image, categorie, fournisseur, min_commande] = row.split(',');
+                
+                if(nom) { // Vérifie que la ligne n'est pas vide
+                    container.innerHTML += `
+                        <div class="product-card bg-white rounded-lg shadow overflow-hidden group cursor-pointer">
+                            <div class="relative overflow-hidden h-48">
+                                <img src="${image.trim()}" alt="${nom}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                <div class="absolute top-2 right-2 bg-accent text-white text-xs font-bold px-2 py-1 rounded">Vérifié</div>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-xs text-gray-500 uppercase font-semibold mb-1">${categorie}</p>
+                                <h4 class="font-bold text-gray-800 mb-2 truncate">${nom}</h4>
+                                <div class="flex justify-between items-end">
+                                    <div>
+                                        <p class="text-primary font-bold text-xl">${prix}</p>
+                                        <p class="text-xs text-gray-500">Min: ${min_commande}</p>
+                                    </div>
+                                    <button class="bg-light hover:bg-primary hover:text-white p-2 rounded-lg transition">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                                <div class="mt-3 pt-3 border-t flex items-center">
+                                    <i class="fas fa-store text-xs text-gray-400 mr-2"></i>
+                                    <span class="text-xs text-gray-600">${fournisseur}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        } catch (error) {
+            console.error("Erreur lors du chargement des produits:", error);
+            container.innerHTML = "<p class='text-red-500 text-center col-span-full'>Erreur de chargement des produits.</p>";
+        }
+    }
+
+    // Lancement au chargement de la page
+    window.onload = loadProducts;
+</script>
 </body>
 </html>
