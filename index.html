@@ -330,6 +330,19 @@
 
         <!-- Pourquoi choisir AFRISHOPSTAR -->
         <section class="mb-12 bg-white rounded-xl shadow-lg p-8">
+            <section class="mb-12 bg-secondary rounded-xl overflow-hidden text-white shadow-xl">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/3 h-48 md:h-auto bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1556740734-7f958945195b?auto=format&fit=crop&w=600&q=80')"></div>
+                <div class="md:w-2/3 p-8">
+                    <h3 class="text-2xl font-bold mb-4">Vendez vos produits en gros sur AFRISHOPSTAR</h3>
+                    <p class="text-gray-300 mb-6 text-sm">Rejoignez le réseau leader du B2B en Afrique. Gérez vos stocks simplement et recevez vos paiements en toute sécurité.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="openVendorForm()" class="bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-orange-600 transition">Devenir Fournisseur</button>
+                        <button class="border border-white/30 px-6 py-2 rounded-lg text-sm hover:bg-white/10 transition">En savoir plus</button>
+                    </div>
+                </div>
+            </div>
+        </section>
             <h3 class="text-2xl font-bold text-secondary text-center mb-8">Pourquoi choisir AFRISHOPSTAR ?</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
@@ -355,6 +368,24 @@
                 </div>
             </div>
         </section>
+        <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[100] flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-8 relative shadow-2xl">
+        <button onclick="toggleModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-secondary">Espace <span class="text-primary">AFRISHOP</span></h2>
+            <p class="text-gray-500 text-sm">Connectez-vous pour acheter ou vendre</p>
+        </div>
+        <form onsubmit="event.preventDefault(); handleAuth(this);">
+            <div class="space-y-4">
+                <input name="email" type="email" placeholder="Email" required class="w-full border border-gray-300 px-4 py-2 rounded-lg outline-none focus:border-primary">
+                <input name="password" type="password" placeholder="Mot de passe" required class="w-full border border-gray-300 px-4 py-2 rounded-lg outline-none focus:border-primary">
+                <button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition">Continuer</button>
+            </div>
+        </form>
+    </div>
+</div>
     </main>
 
     <!-- Footer -->
@@ -582,6 +613,74 @@ container.innerHTML += `
 
     // Lancement au chargement de la page
     window.onload = loadProducts;
+</script>
+    <script type="module">
+    // 1. IMPORT FIREBASE
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "TA_CLE_ICI",
+        authDomain: "ton-projet.firebaseapp.com",
+        projectId: "ton-projet",
+        appId: "ton-id"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // 2. CONFIGURATION GOOGLE SHEETS (Remplace par ton lien CSV)
+    const SHEET_URL = "TON_LIEN_CSV_PUBLIE";
+
+    // Fonction pour charger les produits
+    async function loadProducts() {
+        const container = document.getElementById('featured-products');
+        try {
+            const res = await fetch(SHEET_URL);
+            const csv = await res.text();
+            const lines = csv.split('\n').slice(1);
+            container.innerHTML = ""; 
+
+            lines.forEach(line => {
+                const [nom, prix, img, cat, fournisseur, min, lien] = line.split(',');
+                if(nom) {
+                    container.innerHTML += `
+                        <div class="product-card bg-white rounded-lg shadow p-4">
+                            <img src="${img}" class="w-full h-40 object-cover rounded mb-3">
+                            <h4 class="font-bold truncate">${nom}</h4>
+                            <p class="text-primary font-bold">${prix}</p>
+                            <p class="text-xs text-gray-400 mb-3">Min: ${min}</p>
+                            <a href="${lien}" target="_blank" class="block text-center bg-secondary text-white py-2 rounded hover:bg-primary transition text-sm">Commander</a>
+                        </div>`;
+                }
+            });
+        } catch (e) { console.log("Erreur chargement produits"); }
+    }
+
+    // 3. GESTION DES BOUTONS ET MODAL
+    window.toggleModal = () => document.getElementById('loginModal').classList.toggle('hidden');
+    
+    window.openVendorForm = () => window.open("https://forms.gle/TON_FORMULAIRE", "_blank");
+
+    // Lier les boutons existants
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProducts();
+        
+        // Bouton Mon Compte
+        const btnCompte = document.querySelector('a[href*="Mon compte"]');
+        if(btnCompte) btnCompte.onclick = (e) => { e.preventDefault(); toggleModal(); };
+        
+        // Boutons Vendre
+        document.querySelectorAll('button').forEach(btn => {
+            if(btn.innerText.toLowerCase().includes('vendre')) btn.onclick = openVendorForm;
+        });
+    });
+</script>
+    <script>
+    function openVendorForm() {
+        // Remplace par ton lien Google Forms réel plus tard
+        window.open(https://forms.gle/https://forms.gle/ZK1AW4bj1Gn6KZi77, "_blank");
+    }
 </script>
 </body>
 </html>
