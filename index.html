@@ -439,11 +439,28 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  const buttons = document.querySelectorAll("button");
+  // Initialiser le panier
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      alert("Fonction en cours de développement 🚀");
+  // Mettre à jour le compteur
+  function updateCartCount() {
+    document.getElementById("cart-count").textContent = cart.length;
+  }
+
+  updateCartCount();
+
+  // Gérer les boutons "Ajouter"
+  const buttons = document.querySelectorAll("button[data-product]");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const productName = button.getAttribute("data-product");
+
+      cart.push(productName);
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      updateCartCount();
+      alert(productName + " ajouté au panier 🛒");
     });
   });
 
