@@ -46,6 +46,8 @@
         .search-bar:focus {
             box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
         }
+        /* Simple hide utility for dropdowns/modals */
+        .hidden { display: none; }
     </style>
 </head>
 <body class="min-h-screen bg-gray-50 font-inter">
@@ -66,11 +68,12 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="javascript:void(0)" class="text-sm hover:text-primary">
+                    <a href="javascript:void(0)" id="account-toggle" class="text-sm hover:text-primary">
                         <i class="fas fa-user mr-1"></i> Mon compte
                     </a>
-                    <a href="javascript:void(0)" class="text-sm hover:text-primary">
+                    <a href="javascript:void(0)" id="cart-toggle" class="text-sm hover:text-primary relative">
                         <i class="fas fa-shopping-cart mr-1"></i> Panier
+                        <span id="cart-count" class="ml-1 inline-block bg-primary text-white text-xs px-2 py-0.5 rounded-full">0</span>
                     </a>
                     <a href="javascript:void(0)" class="text-sm hover:text-primary">
                         <i class="fas fa-heart mr-1"></i> Favoris
@@ -95,7 +98,7 @@
                 <div class="flex-1 max-w-2xl mx-8">
                     <div class="relative">
                         <div class="flex">
-                            <select class="bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none">
+                            <select id="category-select" class="bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg px-4 py-3 focus:outline-none">
                                 <option>Toutes catégories</option>
                                 <option>Mode & Textile</option>
                                 <option>Électronique</option>
@@ -103,10 +106,10 @@
                                 <option>Construction</option>
                                 <option>Santé & Beauté</option>
                             </select>
-                            <input type="text" 
+                            <input id="search" type="text" 
                                    placeholder="Rechercher des produits, fournisseurs, catégories..." 
                                    class="flex-1 border border-gray-300 px-4 py-3 focus:outline-none search-bar">
-                            <button class="bg-primary text-white px-6 py-3 rounded-r-lg hover:bg-orange-600 transition">
+                            <button id="search-btn" class="bg-primary text-white px-6 py-3 rounded-r-lg hover:bg-orange-600 transition">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -115,10 +118,10 @@
 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-4">
-                    <button class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition">
+                    <button id="sell-now-btn" class="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition">
                         <i class="fas fa-store mr-2"></i>Vendre maintenant
                     </button>
-                    <button class="border border-primary text-primary px-6 py-2 rounded-lg hover:bg-primary hover:text-white transition">
+                    <button id="download-btn" class="border border-primary text-primary px-6 py-2 rounded-lg hover:bg-primary hover:text-white transition">
                         <i class="fas fa-download mr-2"></i>Télécharger l'app
                     </button>
                 </div>
@@ -159,6 +162,38 @@
         </div>
     </header>
 
+    <!-- Small Cart Dropdown -->
+    <div id="cart-dropdown" class="hidden fixed right-4 top-20 bg-white border rounded-lg shadow-lg w-80 z-50">
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-3">
+                <h4 class="font-bold">Mon panier</h4>
+                <button id="clear-cart" class="text-sm text-red-500 hover:underline">Vider</button>
+            </div>
+            <ul id="cart-items" class="max-h-56 overflow-auto mb-3"></ul>
+            <div class="text-right">
+                <button id="checkout-btn" class="bg-primary text-white px-4 py-2 rounded">Passer à la caisse</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">Connexion / Inscription</h3>
+                <button id="auth-close" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="space-y-4">
+                <input id="auth-email" type="email" placeholder="Email" class="w-full border px-4 py-2 rounded">
+                <input id="auth-password" type="password" placeholder="Mot de passe" class="w-full border px-4 py-2 rounded">
+                <div class="flex space-x-4">
+                    <button id="register-btn" class="flex-1 bg-accent text-white px-4 py-2 rounded">S'inscrire</button>
+                    <button id="login-btn" class="flex-1 border border-accent text-accent px-4 py-2 rounded">Se connecter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="container mx-auto px-4 py-6">
         <!-- Hero Banner -->
         <section class="mb-8">
@@ -167,10 +202,10 @@
                     <h2 class="text-4xl font-bold mb-4">Connectez votre entreprise au marché africain</h2>
                     <p class="text-lg mb-6">Plus de 50,000 fournisseurs vérifiés. Commandes en gros avec garantie de qualité.</p>
                     <div class="flex space-x-4">
-                        <button class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                        <button id="explore-btn" class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
                             Explorer les produits
                         </button>
-                        <button class="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition">
+                        <button id="become-supplier-btn" class="bg-transparent border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition">
                             Devenir fournisseur
                         </button>
                     </div>
@@ -293,7 +328,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">Importateur d"électronique et gadgets technologiques pour toute l"Afrique.</p>
+                    <p class="text-gray-600 mb-4">Importateur d'électronique et gadgets technologiques pour toute l'Afrique.</p>
                     <div class="flex justify-between text-sm">
                         <span><i class="fas fa-check-circle text-accent mr-1"></i> Vérifié</span>
                         <span><i class="fas fa-shipping-fast text-primary mr-1"></i> Livraison rapide</span>
@@ -366,7 +401,7 @@
                         <i class="fas fa-star text-primary text-2xl"></i>
                         <h3 class="text-2xl font-bold">AFRISHOP<span class="text-primary">STAR</span></h3>
                     </div>
-                    <p class="text-gray-300 mb-4">La plateforme B2B leader en Afrique pour le commerce en gros et les opportunités d"affaires.</p>
+                    <p class="text-gray-300 mb-4">La plateforme B2B leader en Afrique pour le commerce en gros et les opportunités d'affaires.</p>
                     <div class="flex space-x-4">
                         <a href="javascript:void(0)" class="text-gray-300 hover:text-white">
                             <i class="fab fa-facebook-f"></i>
@@ -389,7 +424,7 @@
                         <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Comment acheter</a></li>
                         <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Rechercher des fournisseurs</a></li>
                         <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Demandes de devis</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Centre d"aide</a></li>
+                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Centre d'aide</a></li>
                     </ul>
                 </div>
                 
@@ -398,7 +433,7 @@
                     <ul class="space-y-2">
                         <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Devenir fournisseur</a></li>
                         <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Centre fournisseurs</a></li>
-                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Ressources d"exportation</a></li>
+                        <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Ressources d'exportation</a></li>
                         <li><a href="javascript:void(0)" class="text-gray-300 hover:text-white">Formations</a></li>
                     </ul>
                 </div>
@@ -428,7 +463,7 @@
                         © 2024 AFRISHOPSTAR. Tous droits réservés.
                     </p>
                     <div class="flex space-x-6">
-                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white text-sm">Conditions d"utilisation</a>
+                        <a href="javascript:void(0)" class="text-gray-300 hover:text-white text-sm">Conditions d'utilisation</a>
                         <a href="javascript:void(0)" class="text-gray-300 hover:text-white text-sm">Politique de confidentialité</a>
                         <a href="javascript:void(0)" class="text-gray-300 hover:text-white text-sm">Cookies</a>
                     </div>
@@ -436,137 +471,291 @@
             </div>
         </div>
     </footer>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
 
-  // ===== PANIER =====
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-  const cartCount = document.getElementById("cart-count");
-  const cartItems = document.getElementById("cart-items");
-  const clearBtn = document.getElementById("clear-cart");
-
-  function updateCart() {
-    cartCount.textContent = cart.length;
-    cartItems.innerHTML = "";
-
-    cart.forEach((item, index) => {
-      const li = document.createElement("li");
-      li.className = "flex justify-between items-center mb-2";
-
-      li.innerHTML = `
-        <span>${item}</span>
-        <button class="text-red-500 font-bold">❌</button>
-      `;
-
-      li.querySelector("button").addEventListener("click", () => {
-        cart.splice(index, 1);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        updateCart();
-      });
-
-      cartItems.appendChild(li);
-    });
-  }
-
-  updateCart();
-
-  document.querySelectorAll("button[data-product]").forEach(button => {
-    button.addEventListener("click", () => {
-      cart.push(button.getAttribute("data-product"));
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCart();
-    });
-  });
-
-  clearBtn.addEventListener("click", () => {
-    cart = [];
-    localStorage.removeItem("cart");
-    updateCart();
-  });
-
-  // ===== RECHERCHE =====
-  const searchInput = document.getElementById("search");
-  const products = document.querySelectorAll(".product-card");
-
-  searchInput.addEventListener("input", () => {
-    const value = searchInput.value.toLowerCase();
-
-    products.forEach(product => {
-      const name = product.dataset.name.toLowerCase();
-      product.style.display = name.includes(value) ? "block" : "none";
-    });
-  });
-
-});
-</script><!-- Firebase App (compat) -->
     <script>
-  const auth = firebase.auth();
+      // Remplacez ces valeurs par celles de votre projet Firebase.
+      const firebaseConfig = {
+        apiKey: "TA_CLE_ICI",
+        authDomain: "TON_PROJET.firebaseapp.com",
+        projectId: "TON_PROJECT_ID",
+        storageBucket: "TON_BUCKET.appspot.com",
+        messagingSenderId: "TON_ID",
+        appId: "TON_APP_ID"
+      };
 
-  // INSCRIPTION
-  function registerUser() {
-    const email = document.getElementById("auth-email").value;
-    const password = document.getElementById("auth-password").value;
+      // Initialisation Firebase (s'il n'est pas déjà initialisé)
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+        console.log("Firebase initialisé");
+      } else {
+        firebase.app();
+      }
+      const auth = firebase.auth();
+    </script>
 
-    if (!email || !password) {
-      alert("Email et mot de passe requis");
-      return;
-    }
+    <script>
+    // Main app script: gère panier, recherche, génération de produits, UI et auth
+    document.addEventListener("DOMContentLoaded", function () {
 
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        alert("Compte créé avec succès 🎉");
-      })
-      .catch(error => {
-        alert(error.message);
+      // ==== Données de démonstration pour produits en vedette ====
+      const demoProducts = [
+        { id: "p1", name: "Tissu Wax Premium", price: "12.50", img: "https://picsum.photos/300?random=1" },
+        { id: "p2", name: "Smartphone X Pro", price: "220.00", img: "https://picsum.photos/300?random=2" },
+        { id: "p3", name: "Tracteur Agricole 2000", price: "15000.00", img: "https://picsum.photos/300?random=3" },
+        { id: "p4", name: "Casque Audio Bluetooth", price: "35.00", img: "https://picsum.photos/300?random=4" },
+        { id: "p5", name: "Lampe LED Industrielle", price: "18.00", img: "https://picsum.photos/300?random=5" },
+        { id: "p6", name: "Pack Équipements Agro", price: "450.00", img: "https://picsum.photos/300?random=6" }
+      ];
+
+      const featuredContainer = document.getElementById("featured-products");
+
+      function renderProducts(products) {
+        featuredContainer.innerHTML = "";
+        products.forEach(prod => {
+          const card = document.createElement("div");
+          card.className = "product-card bg-white rounded-lg shadow p-4 flex flex-col";
+          card.dataset.name = prod.name;
+          card.innerHTML = `
+            <img src="${prod.img}" alt="${prod.name}" class="w-full h-40 object-cover rounded mb-4">
+            <h4 class="font-semibold text-lg mb-1">${prod.name}</h4>
+            <p class="text-sm text-gray-500 mb-3">Prix: $${prod.price}</p>
+            <div class="mt-auto flex items-center justify-between">
+              <button class="bg-primary text-white px-3 py-2 rounded add-to-cart" data-product="${prod.name}"><i class="fas fa-cart-plus mr-2"></i>Ajouter</button>
+              <button class="border border-gray-300 px-3 py-2 rounded view-product" data-id="${prod.id}">Voir</button>
+            </div>
+          `;
+          featuredContainer.appendChild(card);
+        });
+      }
+
+      renderProducts(demoProducts);
+
+      // ===== PANIER =====
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const cartCount = document.getElementById("cart-count");
+      const cartItems = document.getElementById("cart-items");
+      const clearBtn = document.getElementById("clear-cart");
+      const cartDropdown = document.getElementById("cart-dropdown");
+      const cartToggle = document.getElementById("cart-toggle");
+      const checkoutBtn = document.getElementById("checkout-btn");
+
+      function updateCart() {
+        if (cartCount) cartCount.textContent = cart.length;
+        if (!cartItems) return;
+        cartItems.innerHTML = "";
+
+        if (cart.length === 0) {
+          const li = document.createElement("li");
+          li.textContent = "Votre panier est vide.";
+          li.className = "text-gray-500";
+          cartItems.appendChild(li);
+          return;
+        }
+
+        cart.forEach((item, index) => {
+          const li = document.createElement("li");
+          li.className = "flex justify-between items-center mb-2";
+
+          li.innerHTML = `
+            <span>${item}</span>
+            <button class="text-red-500 font-bold remove-item" data-index="${index}">❌</button>
+          `;
+          cartItems.appendChild(li);
+        });
+
+        // Ajout des listeners pour supprimer
+        cartItems.querySelectorAll(".remove-item").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            const idx = parseInt(btn.dataset.index, 10);
+            if (!isNaN(idx)) {
+              cart.splice(idx, 1);
+              localStorage.setItem("cart", JSON.stringify(cart));
+              updateCart();
+            }
+          });
+        });
+      }
+
+      updateCart();
+
+      // Event delegation: boutons "Ajouter"
+      document.body.addEventListener("click", function(e) {
+        const addBtn = e.target.closest("button.add-to-cart");
+        if (addBtn) {
+          const productName = addBtn.getAttribute("data-product");
+          if (productName) {
+            cart.push(productName);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCart();
+            // Ouvrir le panier rapidement pour feedback
+            cartDropdown.classList.remove("hidden");
+            setTimeout(() => cartDropdown.classList.add("hidden"), 4000);
+          }
+        }
+
+        const viewBtn = e.target.closest("button.view-product");
+        if (viewBtn) {
+          const id = viewBtn.getAttribute("data-id");
+          alert("Voir le produit (démo) : " + id);
+        }
       });
-  }
 
-  // CONNEXION
-  function loginUser() {
-    const email = document.getElementById("auth-email").value;
-    const password = document.getElementById("auth-password").value;
+      // Clear cart
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          cart = [];
+          localStorage.removeItem("cart");
+          updateCart();
+        });
+      }
 
-    auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        alert("Connexion réussie ✅");
-      })
-      .catch(error => {
-        alert(error.message);
+      // Toggle cart dropdown
+      if (cartToggle && cartDropdown) {
+        cartToggle.addEventListener("click", (e) => {
+          e.preventDefault();
+          cartDropdown.classList.toggle("hidden");
+        });
+
+        // fermer si clic à l'extérieur
+        document.addEventListener("click", function(e) {
+          if (!cartDropdown.contains(e.target) && !cartToggle.contains(e.target)) {
+            cartDropdown.classList.add("hidden");
+          }
+        });
+      }
+
+      // Checkout (démo)
+      if (checkoutBtn) {
+        checkoutBtn.addEventListener("click", () => {
+          if (cart.length === 0) {
+            alert("Votre panier est vide.");
+            return;
+          }
+          alert("Passer à la caisse (démo). Articles: " + cart.join(", "));
+        });
+      }
+
+      // ===== RECHERCHE =====
+      const searchInput = document.getElementById("search");
+      function filterProducts() {
+        const value = (searchInput && searchInput.value || "").toLowerCase();
+        const products = document.querySelectorAll(".product-card");
+        products.forEach(product => {
+          const name = (product.dataset.name || "").toLowerCase();
+          product.style.display = name.includes(value) ? "block" : "none";
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener("input", filterProducts);
+        // Recherche rapide au clic sur icone
+        const searchBtn = document.getElementById("search-btn");
+        if (searchBtn) {
+          searchBtn.addEventListener("click", filterProducts);
+        }
+      }
+
+      // ===== Quelques autres boutons d'action (démo) =====
+      const sellNowBtn = document.getElementById("sell-now-btn");
+      const downloadBtn = document.getElementById("download-btn");
+      const exploreBtn = document.getElementById("explore-btn");
+      const becomeSupplierBtn = document.getElementById("become-supplier-btn");
+
+      if (sellNowBtn) sellNowBtn.addEventListener("click", () => alert("Page de vente - à implémenter"));
+      if (downloadBtn) downloadBtn.addEventListener("click", () => alert("Téléchargement de l'app - à implémenter"));
+      if (exploreBtn) exploreBtn.addEventListener("click", () => { window.scrollTo({ top: document.body.scrollHeight/4, behavior: 'smooth' }) });
+      if (becomeSupplierBtn) becomeSupplierBtn.addEventListener("click", () => alert("Formulaire Devenir fournisseur - à implémenter"));
+
+      // ===== AUTH UI & Handlers =====
+      const accountToggle = document.getElementById("account-toggle");
+      const authModal = document.getElementById("auth-modal");
+      const authClose = document.getElementById("auth-close");
+      const registerBtn = document.getElementById("register-btn");
+      const loginBtn = document.getElementById("login-btn");
+      const authEmail = document.getElementById("auth-email");
+      const authPassword = document.getElementById("auth-password");
+
+      if (accountToggle) {
+        accountToggle.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (authModal) authModal.classList.remove("hidden");
+        });
+      }
+      if (authClose && authModal) {
+        authClose.addEventListener("click", () => authModal.classList.add("hidden"));
+        // fermer si clic à l'extérieur du contenu
+        authModal.addEventListener("click", (e) => {
+          if (e.target === authModal) authModal.classList.add("hidden");
+        });
+      }
+
+      // Fonctions Firebase Auth (utilisent 'auth' défini après initialisation Firebase)
+      function registerUser() {
+        const email = authEmail.value.trim();
+        const password = authPassword.value.trim();
+
+        if (!email || !password) {
+          alert("Email et mot de passe requis");
+          return;
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            alert("Compte créé avec succès 🎉");
+            authModal.classList.add("hidden");
+            console.log("Utilisateur créé :", userCredential.user.email);
+          })
+          .catch(error => {
+            alert("Erreur inscription: " + error.message);
+            console.error(error);
+          });
+      }
+
+      function loginUser() {
+        const email = authEmail.value.trim();
+        const password = authPassword.value.trim();
+
+        if (!email || !password) {
+          alert("Email et mot de passe requis");
+          return;
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            alert("Connexion réussie ✅");
+            authModal.classList.add("hidden");
+            console.log("Utilisateur connecté :", userCredential.user.email);
+          })
+          .catch(error => {
+            alert("Erreur connexion: " + error.message);
+            console.error(error);
+          });
+      }
+
+      if (registerBtn) registerBtn.addEventListener("click", registerUser);
+      if (loginBtn) loginBtn.addEventListener("click", loginUser);
+
+      // État utilisateur (facultatif, affiche dans console)
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          console.log("Utilisateur connecté (onAuthStateChanged):", user.email);
+        } else {
+          console.log("Aucun utilisateur connecté");
+        }
       });
-  }
 
-  // ÉTAT UTILISATEUR
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      console.log("Utilisateur connecté :", user.email);
-    } else {
-      console.log("Aucun utilisateur connecté");
-    }
-  });
-</script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+      // Sécurité : prévenir erreurs si firebase non configuré (catch global)
+      window.addEventListener('error', function (e) {
+        // console.warn('Erreur détectée:', e.message);
+      });
 
-<!-- Firebase Auth -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-<!-- Firebase Firestore -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "TA_CLE_ICI",
-    authDomain: "TON_PROJET.firebaseapp.com",
-    projectId: "TON_PROJECT_ID",
-    storageBucket: "TON_BUCKET.appspot.com",
-    messagingSenderId: "TON_ID",
-    appId: "TON_APP_ID"
-  };
-
-  // Initialisation Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  console.log("Firebase connecté avec succès ✅");
-</script>
+    });
+    </script>
 </body>
 </html>
