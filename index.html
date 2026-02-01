@@ -698,8 +698,29 @@ const firebaseConfig = {
   appId: "1:140340952087:web:10dd083cd08200f81cf052"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+<!-- Firebase App (compat) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "TA_CLE_ICI",
+    authDomain: "TON_PROJET.firebaseapp.com",
+    projectId: "TON_PROJECT_ID",
+    storageBucket: "TON_BUCKET.appspot.com",
+    messagingSenderId: "TON_ID",
+    appId: "TON_APP_ID"
+  };
+
+  // Initialisation Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  console.log("Firebase connecté avec succès ✅");
+</script>
 </body>
 </html>
