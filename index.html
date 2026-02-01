@@ -436,269 +436,70 @@
             </div>
         </div>
     </footer>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    <script>
-        // Données des produits
-        const products = [
-            {
-                "id": 1,
-                "name": "Tissu Wax Africain Premium",
-                "category": "Mode & Textile",
-                "price": 4500,
-                "currency": "FCFA",
-                "unit": "par rouleau",
-                "minOrder": 10,
-                "rating": 4.5,
-                "reviews": 128,
-                "supplier": "Textiles Africains Ltd",
-                "image": "https://picsum.photos/300/200?random=1",
-                "description": "Tissu wax de haute qualité, motifs traditionnels, 100% coton"
-            },
-            {
-                "id": 2,
-                "name": "Smartphone Android 128GB",
-                "category": "Électronique",
-                "price": 85000,
-                "currency": "FCFA",
-                "unit": "par unité",
-                "minOrder": 5,
-                "rating": 4.8,
-                "reviews": 256,
-                "supplier": "Tech Import Africa",
-                "image": "https://picsum.photos/300/200?random=2",
-                "description": "Smartphone 6.5\", 8GB RAM, 128GB stockage, double caméra"
-            },
-            {
-                "id": 3,
-                "name": "Tracteur Agricole 50HP",
-                "category": "Agriculture",
-                "price": 12500000,
-                "currency": "FCFA",
-                "unit": "par unité",
-                "minOrder": 1,
-                "rating": 4.9,
-                "reviews": 42,
-                "supplier": "AgriPro Solutions",
-                "image": "https://picsum.photos/300/200?random=3",
-                "description": "Tracteur diesel 50 chevaux, équipement complet inclus"
-            },
-            {
-                "id": 4,
-                "name": "Ciment Portland 50kg",
-                "category": "Construction",
-                "price": 5500,
-                "currency": "FCFA",
-                "unit": "par sac",
-                "minOrder": 100,
-                "rating": 4.7,
-                "reviews": 89,
-                "supplier": "BuildMaster Ltd",
-                "image": "https://picsum.photos/300/200?random=4",
-                "description": "Ciment de construction haute résistance, qualité certifiée"
-            },
-            {
-                "id": 5,
-                "name": "Huile d"Argan Bio 100ml",
-                "category": "Santé & Beauté",
-                "price": 12000,
-                "currency": "FCFA",
-                "unit": "par flacon",
-                "minOrder": 50,
-                "rating": 4.6,
-                "reviews": 167,
-                "supplier": "Natural Beauty Morocco",
-                "image": "https://picsum.photos/300/200?random=5",
-                "description": "Huile d"argan pure 100% bio, certification écologique"
-            },
-            {
-                "id": 6,
-                "name": "Riz Basmati Premium 25kg",
-                "category": "Alimentation",
-                "price": 35000,
-                "currency": "FCFA",
-                "unit": "par sac",
-                "minOrder": 20,
-                "rating": 4.4,
-                "reviews": 203,
-                "supplier": "AgriFood Export",
-                "image": "https://picsum.photos/300/200?random=6",
-                "description": "Riz basmati de qualité supérieure, grains longs parfumés"
-            },
-            {
-                "id": 7,
-                "name": "Générateur Solaire 5KVA",
-                "category": "Énergie",
-                "price": 1850000,
-                "currency": "FCFA",
-                "unit": "par unité",
-                "minOrder": 3,
-                "rating": 4.8,
-                "reviews": 56,
-                "supplier": "Solar Power Africa",
-                "image": "https://picsum.photos/300/200?random=7",
-                "description": "Système solaire complet avec batteries et onduleur"
-            },
-            {
-                "id": 8,
-                "name": "Meubles Bureau Acajou",
-                "category": "Mobilier",
-                "price": 285000,
-                "currency": "FCFA",
-                "unit": "par set",
-                "minOrder": 5,
-                "rating": 4.5,
-                "reviews": 78,
-                "supplier": "Woodcraft Enterprises",
-                "image": "https://picsum.photos/300/200?random=8",
-                "description": "Bureau en acajou massif avec tiroirs et chaise assortie"
-            }
-        ];
+  // ===== PANIER =====
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-        // Fonction pour formater les prix
-        function formatPrice(price) {
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-        }
+  const cartCount = document.getElementById("cart-count");
+  const cartItems = document.getElementById("cart-items");
+  const clearBtn = document.getElementById("clear-cart");
 
-        // Fonction pour générer les étoiles de notation
-        function generateRatingStars(rating) {
-            let stars = "";
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 >= 0.5;
-            
-            for (let i = 0; i < 5; i++) {
-                if (i < fullStars) {
-                    stars += "<i class="fas fa-star text-yellow-400"></i>";
-                } else if (i === fullStars && hasHalfStar) {
-                    stars += "<i class="fas fa-star-half-alt text-yellow-400"></i>";
-                } else {
-                    stars += "<i class="far fa-star text-yellow-400"></i>";
-                }
-            }
-            return stars;
-        }
+  function updateCart() {
+    cartCount.textContent = cart.length;
+    cartItems.innerHTML = "";
 
-        // Fonction pour générer les cartes de produits
-        function generateProductCard(product) {
-            return `
-                <div class="product-card bg-white rounded-lg shadow overflow-hidden">
-                    <div class="relative">
-                        <img src="${product.image}" 
-                             alt="${product.name}" 
-                             class="w-full h-48 object-cover"
-                             loading="lazy">
-                        <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
-                            Vérifié
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-bold text-gray-800 line-clamp-2">${product.name}</h4>
-                            <button class="text-gray-400 hover:text-primary">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <div class="flex items-center mb-1">
-                                ${generateRatingStars(product.rating)}
-                                <span class="text-sm text-gray-500 ml-2">${product.rating} (${product.reviews})</span>
-                            </div>
-                            <p class="text-sm text-gray-500">${product.supplier}</p>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <div class="text-2xl font-bold text-primary">
-                                ${formatPrice(product.price)} ${product.currency}
-                            </div>
-                            <p class="text-sm text-gray-500">${product.unit} • Min. commande: ${product.minOrder}</p>
-                        </div>
-                        
-                        <div class="flex space-x-2">
-                            <button class="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-orange-600 transition font-medium"
-                                    onclick="addToCart(${product.id})">
-                                <i class="fas fa-shopping-cart mr-2"></i>Ajouter
-                            </button>
-                            <button class="px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition"
-                                    onclick="viewProduct(${product.id})">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.className = "flex justify-between items-center mb-2";
 
-        // Fonction pour afficher les produits
-        function displayProducts() {
-            const container = document.getElementById("featured-products");
-            container.innerHTML = products.slice(0, 4).map(product => generateProductCard(product)).join("");
-        }
+      li.innerHTML = `
+        <span>${item}</span>
+        <button class="text-red-500 font-bold">❌</button>
+      `;
 
-        // Fonctions pour les actions
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            alert(`Produit ajouté au panier : ${product.name}`);
-            // Ici, vous ajouteriez la logique réelle d"ajout au panier
-        }
+      li.querySelector("button").addEventListener("click", () => {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCart();
+      });
 
-        function viewProduct(productId) {
-            const product = products.find(p => p.id === productId);
-            alert(`Voir les détails de : ${product.name}\nPrix : ${formatPrice(product.price)} ${product.currency}\nFournisseur : ${product.supplier}`);
-            // Ici, vous redirigeriez vers la page de détail du produit
-        }
+      cartItems.appendChild(li);
+    });
+  }
 
-        // Initialisation
-        document.addEventListener("DOMContentLoaded", function() {
-            displayProducts();
-            
-            // Gestion de la navigation
-            document.querySelectorAll("a[href^="javascript:void(0)"]").forEach(link => {
-                link.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    const text = this.textContent || this.innerText;
-                    alert(`Navigation vers : ${text}`);
-                    // Ici, vous implémenteriez la navigation réelle
-                });
-            });
-            
-            // Gestion de la recherche
-            const searchButton = document.querySelector("button.bg-primary");
-            const searchInput = document.querySelector(".search-bar");
-            
-            searchButton.addEventListener("click", function() {
-                if (searchInput.value.trim()) {
-                    alert(`Recherche pour : ${searchInput.value}`);
-                    // Ici, vous implémenteriez la recherche réelle
-                }
-            });
-            
-            searchInput.addEventListener("keypress", function(e) {
-                if (e.key === "Enter") {
-                    if (searchInput.value.trim()) {
-                        alert(`Recherche pour : ${searchInput.value}`);
-                        // Ici, vous implémenteriez la recherche réelle
-                    }
-                }
-            });
-        });
-    </script>
-            function updateAuthUI() {
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  updateCart();
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDOxkX0xpo2nspHEjETeaOKTOD5JXa70Xo",
-  authDomain: "afrishopstar-4168c.firebaseapp.com",
-  projectId: "afrishopstar-4168c",
-  storageBucket: "afrishopstar-4168c.firebasestorage.app",
-  messagingSenderId: "140340952087",
-  appId: "1:140340952087:web:10dd083cd08200f81cf052"
-};
+  document.querySelectorAll("button[data-product]").forEach(button => {
+    button.addEventListener("click", () => {
+      cart.push(button.getAttribute("data-product"));
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCart();
+    });
+  });
 
-<!-- Firebase App (compat) -->
+  clearBtn.addEventListener("click", () => {
+    cart = [];
+    localStorage.removeItem("cart");
+    updateCart();
+  });
+
+  // ===== RECHERCHE =====
+  const searchInput = document.getElementById("search");
+  const products = document.querySelectorAll(".product-card");
+
+  searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
+
+    products.forEach(product => {
+      const name = product.dataset.name.toLowerCase();
+      product.style.display = name.includes(value) ? "block" : "none";
+    });
+  });
+
+});
+</script><!-- Firebase App (compat) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 
 <!-- Firebase Auth -->
